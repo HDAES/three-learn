@@ -1,8 +1,10 @@
 <template>
   <div class="container" ref="container"></div>
+  <Urls />
 </template>
 
 <script setup lang="ts">
+import Urls from "@/components/url.vue";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { onMounted, ref } from "vue";

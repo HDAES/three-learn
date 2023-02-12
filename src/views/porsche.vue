@@ -1,8 +1,44 @@
 <template>
   <div class="container" ref="container"></div>
+  <Urls />
+  <div class="color-controls">
+    <div class="controls-item">
+      <div class="controls-label">鲨蓝</div>
+      <div
+        @click="handleChangeColor(0x006dd1)"
+        class="controls-color-box"
+        style="background-color: rgb(0, 109, 209)"
+      ></div>
+    </div>
+    <div class="controls-item">
+      <div class="controls-label">星光宝石红</div>
+      <div
+        @click="handleChangeColor(0xaa1059)"
+        class="controls-color-box"
+        style="background-color: #aa1059"
+      ></div>
+    </div>
+    <div class="controls-item">
+      <div class="controls-label">胭脂红</div>
+      <div
+        @click="handleChangeColor(0x990033)"
+        class="controls-color-box"
+        style="background-color: #990033"
+      ></div>
+    </div>
+    <div class="controls-item">
+      <div class="controls-label">巨蟒绿</div>
+      <div
+        @click="handleChangeColor(0x3c9343)"
+        class="controls-color-box"
+        style="background-color: #3c9343"
+      ></div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
+import Urls from "@/components/url.vue";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
@@ -27,7 +63,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 //设置位置
-camera.position.set(0, 5, 5);
+camera.position.set(5, 5, 5);
 
 //初始化渲染器
 const renderer = new THREE.WebGLRenderer({
@@ -84,12 +120,15 @@ dracoLoader.setDecoderPath(
 loader.setDRACOLoader(dracoLoader);
 
 const bodyMaterial = new MeshPhysicalMaterial({
-  color: 0xffd111,
+  color: 0x006dd1,
   metalness: 1,
   roughness: 0.5,
   clearcoat: 1,
   clearcoatRoughness: 0,
 });
+const handleChangeColor = (newColor) => {
+  bodyMaterial.color.set(newColor);
+};
 loader.load(
   "http://hades0512.oss-cn-beijing.aliyuncs.com/three/free_porsche_911_carrera_4s.glb",
   (gltf) => {
@@ -108,7 +147,7 @@ loader.load(
   }
 );
 
-const light1 = new THREE.DirectionalLight(0xffffff, 1);
+const light1 = new THREE.DirectionalLight(0xffffff, 5);
 light1.position.set(0, 0, 5);
 scene.add(light1);
 const light2 = new THREE.DirectionalLight(0xffffff, 1);
@@ -120,10 +159,10 @@ scene.add(light3);
 const light4 = new THREE.DirectionalLight(0xffffff, 1);
 light4.position.set(5, 0, -5);
 scene.add(light4);
-const light5 = new THREE.DirectionalLight(0xffffff, 1);
+const light5 = new THREE.DirectionalLight(0xffffff, 0.3);
 light5.position.set(-5, 5, 5);
 scene.add(light5);
-const light6 = new THREE.DirectionalLight(0xffffff, 1);
+const light6 = new THREE.DirectionalLight(0xffffff, 0.3);
 light6.position.set(-5, 5, 0);
 scene.add(light6);
 </script>
@@ -133,5 +172,24 @@ scene.add(light6);
   height: 100vh;
   background-color: #f0f0f0;
   overflow: hidden;
+}
+.color-controls {
+  position: absolute;
+  right: 50px;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.controls-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.controls-color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  margin-left: 20px;
 }
 </style>
